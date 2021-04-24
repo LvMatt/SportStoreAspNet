@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data;
+using SportStore.Dtos;
 using SportStore.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ namespace SportStore.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-
         public ProductsController(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
@@ -27,28 +27,25 @@ namespace SportStore.Controllers
 
         }
 
-
         //GET api/commands
         [HttpGet]
         [Route("products")]
         public ActionResult<IEnumerable<Products>> GetAllProducts()
         {
             var productItems = _productRepository.GetAllProducts();
-            return Ok(productItems);
-            //return Ok(productItems);
-            //return products;
+            return Ok(_mapper.Map<IEnumerable<ProductsReadDto>>(productItems));
+           
         }
 
-        //GET api/commands/{id}
-        //[HttpGet("{id}", Name = "GetProductById")]
-        //public ActionResult<ProductsReadDto> GetProductById(int id)
-        //{
-        //    var productItems = _productRepository.GetProductById(id);
-        //    if (productItems != null)
-        //    {
-        //        return Ok(_mapper.Map<ProductsReadDto>(productItems));
-        //    }
-        //    return NotFound();
-        //}
+        [HttpGet("products/{id}")]
+        public ActionResult<ProductsReadDto> GetProductById(int id)
+        {
+            var productItems = _productRepository.GetProductById(id);
+            if (productItems != null)
+            {
+                return Ok(_mapper.Map<ProductsReadDto>(productItems));
+            }
+            return NotFound();
+        }
     }
 }

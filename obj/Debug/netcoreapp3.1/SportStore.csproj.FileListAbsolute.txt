@@ -30,3 +30,4 @@ C:\Users\45501\source\repos\SportStore\SportStore\obj\Debug\netcoreapp3.1\SportS
 C:\Users\45501\source\repos\SportStore\SportStore\obj\Debug\netcoreapp3.1\SportStore.dll
 C:\Users\45501\source\repos\SportStore\SportStore\obj\Debug\netcoreapp3.1\SportStore.pdb
 C:\Users\45501\source\repos\SportStore\SportStore\obj\Debug\netcoreapp3.1\SportStore.genruntimeconfig.cache
+C:\Users\45501\source\repos\SportStore\SportStore\obj\Debug\netcoreapp3.1\SportStore.csprojAssemblyReference.cache
