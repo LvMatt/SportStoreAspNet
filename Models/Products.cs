@@ -11,14 +11,14 @@ namespace SportStore.Models
             ProductsOrders = new HashSet<ProductsOrders>();
         }
 
-        public int ProductsId { get; set; }
+        public int Id { get; set; }
         public int SuppliersId { get; set; }
-        public string ProductName { get; set; }
-        public decimal ProductPrice { get; set; }
-        public string ProductDescription { get; set; }
-        public byte[] ProductImageData { get; set; }
-        public decimal? ProductWeight { get; set; }
-        public string ProductImageName { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Description { get; set; }
+        public byte[] ImageData { get; set; }
+        public decimal? Weight { get; set; }
+        public string ImageName { get; set; }
 
         public virtual Suppliers Suppliers { get; set; }
         public virtual ICollection<ProductsCategories> ProductsCategories { get; set; }

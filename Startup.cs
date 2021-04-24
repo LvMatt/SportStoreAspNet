@@ -28,9 +28,13 @@ namespace SportStore
         {
             services.AddDbContext<ProductContext>(opt => opt.UseMySql
             (Configuration.GetConnectionString("SportShopConnect")));
+
             services.AddControllers();
-            services.AddScoped<IProductRepository, MockProductRepository>();
-            //services.AddScoped<IProductRepository, SqlProductRepository>;
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //services.AddScoped<IProductRepository, MockProductRepository>();
+            services.AddScoped<IProductRepository, SqlProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

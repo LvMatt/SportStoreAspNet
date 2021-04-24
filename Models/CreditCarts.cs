@@ -10,13 +10,13 @@ namespace SportStore.Models
             Payments = new HashSet<Payments>();
         }
 
-        public int CreditCartId { get; set; }
-        public string CreditcartValidation { get; set; }
-        public DateTime CreditcartExpiration { get; set; }
-        public string CreditcartExtradetails { get; set; }
-        public int CustomerCustomerId { get; set; }
+        public int Id { get; set; }
+        public string Validation { get; set; }
+        public DateTime Expiration { get; set; }
+        public string Extradetails { get; set; }
+        public int CustomerId { get; set; }
 
-        public virtual Customers CustomerCustomer { get; set; }
+        public virtual Customers Customer { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
     }
 }

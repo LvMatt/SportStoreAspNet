@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SportStore.Models
 {
     public partial class ProductsOrders
     {
-        public int ProductsProductsId { get; set; }
-        public int OrdersOrdersId { get; set; }
+        [Key]
+        public int ProductsId { get; set; }
+        public int OrdersId { get; set; }
 
-        public virtual Orders OrdersOrders { get; set; }
-        public virtual Products ProductsProducts { get; set; }
+        public virtual Orders Orders { get; set; }
+        public virtual Products Products { get; set; }
     }
 }

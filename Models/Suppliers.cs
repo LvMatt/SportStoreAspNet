@@ -10,9 +10,9 @@ namespace SportStore.Models
             Products = new HashSet<Products>();
         }
 
-        public int SuppliersId { get; set; }
-        public string SuppliersName { get; set; }
-        public string SuppliersAddress { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
 
         public virtual ICollection<Products> Products { get; set; }
     }

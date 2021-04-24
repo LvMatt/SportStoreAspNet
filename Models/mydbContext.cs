@@ -32,7 +32,7 @@ namespace SportStore.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;port=3306;database=mydb;user=root;password=Matkokat123!", x => x.ServerVersion("8.0.23-mysql"));
+                optionsBuilder.UseMySql("server=localhost;port=3306;database=mydb;uid=root;pwd=Matkokat123!", x => x.ServerVersion("8.0.23-mysql"));
             }
         }
 
@@ -42,21 +42,17 @@ namespace SportStore.Models
             {
                 entity.ToTable("branches");
 
-                entity.HasIndex(e => e.BranchesId)
+                entity.HasIndex(e => e.Id)
                     .HasName("branches_id_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.BranchesId).HasColumnName("branches_id");
-
-                entity.Property(e => e.BranchesAddress)
-                    .HasColumnName("branches_address")
+                entity.Property(e => e.Address)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.BranchesPhone)
+                entity.Property(e => e.Phone)
                     .IsRequired()
-                    .HasColumnName("branches_phone")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
@@ -64,97 +60,75 @@ namespace SportStore.Models
 
             modelBuilder.Entity<CreditCarts>(entity =>
             {
-                entity.HasKey(e => e.CreditCartId)
-                    .HasName("PRIMARY");
-
                 entity.ToTable("credit_carts");
 
-                entity.HasIndex(e => e.CreditCartId)
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("fk_Credit_cart_Customer1_idx");
+
+                entity.HasIndex(e => e.Id)
                     .HasName("credit_cart_id_UNIQUE")
                     .IsUnique();
 
-                entity.HasIndex(e => e.CustomerCustomerId)
-                    .HasName("fk_Credit_cart_Customer1_idx");
+                entity.Property(e => e.Expiration).HasColumnType("datetime");
 
-                entity.Property(e => e.CreditCartId).HasColumnName("credit_cart_id");
-
-                entity.Property(e => e.CreditcartExpiration)
-                    .HasColumnName("creditcart_expiration")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.CreditcartExtradetails)
-                    .HasColumnName("creditcart_extradetails")
+                entity.Property(e => e.Extradetails)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.CreditcartValidation)
+                entity.Property(e => e.Validation)
                     .IsRequired()
-                    .HasColumnName("creditcart_validation")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.CustomerCustomerId).HasColumnName("Customer_customer_id");
-
-                entity.HasOne(d => d.CustomerCustomer)
+                entity.HasOne(d => d.Customer)
                     .WithMany(p => p.CreditCarts)
-                    .HasForeignKey(d => d.CustomerCustomerId)
+                    .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Credit_cart_Customer1");
             });
 
             modelBuilder.Entity<Customers>(entity =>
             {
-                entity.HasKey(e => e.CustomerId)
-                    .HasName("PRIMARY");
-
                 entity.ToTable("customers");
 
-                entity.HasIndex(e => e.CustomerId)
+                entity.HasIndex(e => e.Id)
                     .HasName("customer_id_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.CustomerId).HasColumnName("customer_id");
-
-                entity.Property(e => e.CustomerAddress)
+                entity.Property(e => e.Address)
                     .IsRequired()
-                    .HasColumnName("customer_address")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.CustomerEmail)
+                entity.Property(e => e.Email)
                     .IsRequired()
-                    .HasColumnName("customer_email")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.CustomerFirstname)
+                entity.Property(e => e.Firstname)
                     .IsRequired()
-                    .HasColumnName("customer_firstname")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.CustomerPassword)
+                entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasColumnName("customer_password")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.CustomerPhone)
+                entity.Property(e => e.Phone)
                     .IsRequired()
-                    .HasColumnName("customer_phone")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.CustomerSurname)
+                entity.Property(e => e.Surname)
                     .IsRequired()
-                    .HasColumnName("customer_surname")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
@@ -164,42 +138,30 @@ namespace SportStore.Models
             {
                 entity.ToTable("orders");
 
-                entity.HasIndex(e => e.BranchesBranchesId)
+                entity.HasIndex(e => e.BranchesId)
                     .HasName("fk_Orders_Branches1_idx");
 
-                entity.HasIndex(e => e.CustomersCustomerId)
+                entity.HasIndex(e => e.CustomersId)
                     .HasName("fk_orders_customers1_idx");
 
-                entity.HasIndex(e => e.OrdersId)
+                entity.HasIndex(e => e.Id)
                     .HasName("orders_id_UNIQUE")
                     .IsUnique();
 
                 entity.HasIndex(e => e.PaymentId)
                     .HasName("fk_Orders_Payment1_idx");
 
-                entity.Property(e => e.OrdersId).HasColumnName("orders_id");
+                entity.Property(e => e.Amount).HasColumnType("decimal(14,0)");
 
-                entity.Property(e => e.BranchesBranchesId).HasColumnName("Branches_branches_id");
-
-                entity.Property(e => e.CartCartId).HasColumnName("Cart_cart_id");
-
-                entity.Property(e => e.CustomersCustomerId).HasColumnName("customers_customer_id");
-
-                entity.Property(e => e.OrdersFullAmount)
-                    .HasColumnName("orders_full_amount")
-                    .HasColumnType("decimal(14,0)");
-
-                entity.Property(e => e.PaymentId).HasColumnName("payment_id");
-
-                entity.HasOne(d => d.BranchesBranches)
+                entity.HasOne(d => d.Branches)
                     .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.BranchesBranchesId)
+                    .HasForeignKey(d => d.BranchesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Orders_Branches1");
 
-                entity.HasOne(d => d.CustomersCustomer)
+                entity.HasOne(d => d.Customers)
                     .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.CustomersCustomerId)
+                    .HasForeignKey(d => d.CustomersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_orders_customers1");
 
@@ -212,31 +174,23 @@ namespace SportStore.Models
 
             modelBuilder.Entity<Payments>(entity =>
             {
-                entity.HasKey(e => e.PaymentId)
-                    .HasName("PRIMARY");
-
                 entity.ToTable("payments");
 
-                entity.HasIndex(e => e.CreditCartId)
+                entity.HasIndex(e => e.CreditcartId)
                     .HasName("fk_Payment_Credit_cart1_idx");
 
-                entity.HasIndex(e => e.PaymentId)
+                entity.HasIndex(e => e.Id)
                     .HasName("payment_id_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.PaymentId).HasColumnName("payment_id");
-
-                entity.Property(e => e.CreditCartId).HasColumnName("credit_cart_id");
-
                 entity.Property(e => e.PaymentInvoice)
-                    .HasColumnName("payment_invoice")
                     .HasColumnType("varchar(1000)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.HasOne(d => d.CreditCart)
+                entity.HasOne(d => d.Creditcart)
                     .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.CreditCartId)
+                    .HasForeignKey(d => d.CreditcartId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Payment_Credit_cart1");
             });
@@ -245,20 +199,16 @@ namespace SportStore.Models
             {
                 entity.ToTable("product_categories");
 
-                entity.HasIndex(e => e.ProductCategoriesId)
+                entity.HasIndex(e => e.Id)
                     .HasName("product_categories_id_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.ProductCategoriesId).HasColumnName("product_categories_id");
-
-                entity.Property(e => e.ProductCategoriesDescription)
-                    .HasColumnName("product_categories_description")
+                entity.Property(e => e.Description)
                     .HasColumnType("varchar(255)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.ProductCategoriesType)
-                    .HasColumnName("product_categories_type")
+                entity.Property(e => e.Type)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
@@ -268,47 +218,34 @@ namespace SportStore.Models
             {
                 entity.ToTable("products");
 
-                entity.HasIndex(e => e.ProductsId)
+                entity.HasIndex(e => e.Id)
                     .HasName("products_id_UNIQUE")
                     .IsUnique();
 
                 entity.HasIndex(e => e.SuppliersId)
                     .HasName("fk_Products_Suppliers_idx");
 
-                entity.Property(e => e.ProductsId).HasColumnName("products_id");
-
-                entity.Property(e => e.ProductDescription)
-                    .HasColumnName("product_description")
+                entity.Property(e => e.Description)
                     .HasColumnType("varchar(255)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.ProductImageData)
-                    .HasColumnName("product_image_data")
-                    .HasMaxLength(50);
+                entity.Property(e => e.ImageData).HasMaxLength(50);
 
-                entity.Property(e => e.ProductImageName)
-                    .HasColumnName("product_image_name")
+                entity.Property(e => e.ImageName)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.ProductName)
+                entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnName("product_name")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.ProductPrice)
-                    .HasColumnName("product_price")
-                    .HasColumnType("decimal(10,0)");
+                entity.Property(e => e.Price).HasColumnType("decimal(10,0)");
 
-                entity.Property(e => e.ProductWeight)
-                    .HasColumnName("product_weight")
-                    .HasColumnType("decimal(10,0)");
-
-                entity.Property(e => e.SuppliersId).HasColumnName("suppliers_id");
+                entity.Property(e => e.Weight).HasColumnType("decimal(10,0)");
 
                 entity.HasOne(d => d.Suppliers)
                     .WithMany(p => p.Products)
@@ -330,10 +267,6 @@ namespace SportStore.Models
                 entity.HasIndex(e => e.ProductsId)
                     .HasName("fk_products_has_product_categories_products1_idx");
 
-                entity.Property(e => e.ProductsId).HasColumnName("products_id");
-
-                entity.Property(e => e.ProductCategoriesId).HasColumnName("product_categories_id");
-
                 entity.HasOne(d => d.ProductCategories)
                     .WithMany(p => p.ProductsCategories)
                     .HasForeignKey(d => d.ProductCategoriesId)
@@ -349,30 +282,26 @@ namespace SportStore.Models
 
             modelBuilder.Entity<ProductsOrders>(entity =>
             {
-                entity.HasKey(e => new { e.ProductsProductsId, e.OrdersOrdersId })
+                entity.HasKey(e => new { e.ProductsId, e.OrdersId })
                     .HasName("PRIMARY");
 
                 entity.ToTable("products_orders");
 
-                entity.HasIndex(e => e.OrdersOrdersId)
+                entity.HasIndex(e => e.OrdersId)
                     .HasName("fk_products_has_orders_orders1_idx");
 
-                entity.HasIndex(e => e.ProductsProductsId)
+                entity.HasIndex(e => e.ProductsId)
                     .HasName("fk_products_has_orders_products1_idx");
 
-                entity.Property(e => e.ProductsProductsId).HasColumnName("products_products_id");
-
-                entity.Property(e => e.OrdersOrdersId).HasColumnName("orders_orders_id");
-
-                entity.HasOne(d => d.OrdersOrders)
+                entity.HasOne(d => d.Orders)
                     .WithMany(p => p.ProductsOrders)
-                    .HasForeignKey(d => d.OrdersOrdersId)
+                    .HasForeignKey(d => d.OrdersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_products_has_orders_orders1");
 
-                entity.HasOne(d => d.ProductsProducts)
+                entity.HasOne(d => d.Products)
                     .WithMany(p => p.ProductsOrders)
-                    .HasForeignKey(d => d.ProductsProductsId)
+                    .HasForeignKey(d => d.ProductsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_products_has_orders_products1");
             });
@@ -381,46 +310,38 @@ namespace SportStore.Models
             {
                 entity.ToTable("staff");
 
-                entity.HasIndex(e => e.BranchesBranchesId)
+                entity.HasIndex(e => e.BranchesId)
                     .HasName("fk_Staff_Branches1_idx");
 
-                entity.HasIndex(e => e.StaffId)
+                entity.HasIndex(e => e.Id)
                     .HasName("staff_id_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.StaffId).HasColumnName("staff_id");
-
-                entity.Property(e => e.BranchesBranchesId).HasColumnName("Branches_branches_id");
-
-                entity.Property(e => e.StaffAddress)
-                    .HasColumnName("staff_address")
+                entity.Property(e => e.Address)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.StaffFullname)
+                entity.Property(e => e.Fullname)
                     .IsRequired()
-                    .HasColumnName("staff_fullname")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.StaffPhone)
-                    .HasColumnName("staff_phone")
+                entity.Property(e => e.Phone)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.StaffPosition)
+                entity.Property(e => e.Position)
                     .IsRequired()
-                    .HasColumnName("staff_position")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.HasOne(d => d.BranchesBranches)
+                entity.HasOne(d => d.Branches)
                     .WithMany(p => p.Staff)
-                    .HasForeignKey(d => d.BranchesBranchesId)
+                    .HasForeignKey(d => d.BranchesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Staff_Branches1");
             });
@@ -429,22 +350,18 @@ namespace SportStore.Models
             {
                 entity.ToTable("suppliers");
 
-                entity.HasIndex(e => e.SuppliersId)
+                entity.HasIndex(e => e.Id)
                     .HasName("suppliers_id_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.SuppliersId).HasColumnName("suppliers_id");
-
-                entity.Property(e => e.SuppliersAddress)
+                entity.Property(e => e.Address)
                     .IsRequired()
-                    .HasColumnName("suppliers_address")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.SuppliersName)
+                entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnName("suppliers_name")
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");

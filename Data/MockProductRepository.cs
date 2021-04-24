@@ -8,30 +8,18 @@ namespace SportStore.Data
 {
     public class MockProductRepository : IProductRepository
     {
-        public void CreateProduct(Product product)
+    
+        public Products GetProductById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteProduct(Product product)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Product GeProductById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<Products> GetAllProducts()
         {
             throw new NotImplementedException();
 
         }
 
-        public void UpdateProduct(Product product)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

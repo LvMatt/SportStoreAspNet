@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SportStore.Models
 {
@@ -9,10 +10,10 @@ namespace SportStore.Models
         {
             ProductsCategories = new HashSet<ProductsCategories>();
         }
-
-        public int ProductCategoriesId { get; set; }
-        public string ProductCategoriesType { get; set; }
-        public string ProductCategoriesDescription { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public string Description { get; set; }
 
         public virtual ICollection<ProductsCategories> ProductsCategories { get; set; }
     }

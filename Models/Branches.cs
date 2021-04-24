@@ -11,9 +11,9 @@ namespace SportStore.Models
             Staff = new HashSet<Staff>();
         }
 
-        public int BranchesId { get; set; }
-        public string BranchesAddress { get; set; }
-        public string BranchesPhone { get; set; }
+        public int Id { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
 
         public virtual ICollection<Orders> Orders { get; set; }
         public virtual ICollection<Staff> Staff { get; set; }

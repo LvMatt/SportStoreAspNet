@@ -11,13 +11,13 @@ namespace SportStore.Models
             Orders = new HashSet<Orders>();
         }
 
-        public int CustomerId { get; set; }
-        public string CustomerFirstname { get; set; }
-        public string CustomerSurname { get; set; }
-        public string CustomerPhone { get; set; }
-        public string CustomerAddress { get; set; }
-        public string CustomerEmail { get; set; }
-        public string CustomerPassword { get; set; }
+        public int Id { get; set; }
+        public string Firstname { get; set; }
+        public string Surname { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
 
         public virtual ICollection<CreditCarts> CreditCarts { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
