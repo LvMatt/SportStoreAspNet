@@ -8,8 +8,10 @@ namespace SportStore.Data
 {
     public interface IProductRepository
     {
+        bool SaveChanges();
         IEnumerable<Products> GetAllProducts();
         Products GetProductById(int id);
+        void CreateProducts(Products product);
       
     }
 }

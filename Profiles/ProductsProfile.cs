@@ -14,6 +14,7 @@ namespace SportStore.Profiles
         {
             //Source -> Target
             CreateMap<Products, ProductsReadDto>();
+            CreateMap<ProductsCreateDto, Products>();
         }
     }
 }

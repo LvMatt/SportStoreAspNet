@@ -26,5 +26,20 @@ namespace SportStore.Data
             return _context.Products.ToList();
         }
 
+        public void CreateProducts(Products product)
+        {
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
+
+            _context.Products.Add(product);
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
+
     }
 }

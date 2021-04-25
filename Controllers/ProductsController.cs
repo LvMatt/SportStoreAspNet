@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace SportStore.Controllers
 {
-    //api/commands
     [Route("api/")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -27,7 +26,6 @@ namespace SportStore.Controllers
 
         }
 
-        //GET api/commands
         [HttpGet]
         [Route("products")]
         public ActionResult<IEnumerable<Products>> GetAllProducts()
@@ -46,6 +44,19 @@ namespace SportStore.Controllers
                 return Ok(_mapper.Map<ProductsReadDto>(productItems));
             }
             return NotFound();
+        }
+
+        [HttpPost]
+        [Route("products")]
+        public ActionResult<ProductsReadDto> CreateCommand(ProductsCreateDto productCreateDto)
+        {
+            var productModel = _mapper.Map<Products>(productCreateDto);
+            _productRepository.CreateProducts(productModel);
+             _productRepository.SaveChanges();
+
+            var productReadDto = _mapper.Map<ProductsReadDto>(productModel);
+
+            return CreatedAtRoute(nameof(GetProductById), new { Id = productReadDto.Id }, productReadDto);
         }
     }
 }

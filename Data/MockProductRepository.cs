@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SportStore.Data
 {
-    public class MockProductRepository : IProductRepository
+    public class MockProductRepository
     {
     
         public Products GetProductById(int id)
