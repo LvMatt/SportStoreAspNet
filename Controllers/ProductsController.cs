@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data;
@@ -46,13 +47,14 @@ namespace SportStore.Controllers
             return NotFound();
         }
 
+        [Authorize]
         [HttpPost]
         [Route("products")]
-        public ActionResult<ProductsReadDto> CreateCommand(ProductsCreateDto productCreateDto)
+        public ActionResult<ProductsReadDto> CreateProducts(ProductsCreateDto productCreateDto)
         {
             var productModel = _mapper.Map<Products>(productCreateDto);
             _productRepository.CreateProducts(productModel);
-             _productRepository.SaveChanges();
+            _productRepository.SaveChanges();
 
             var productReadDto = _mapper.Map<ProductsReadDto>(productModel);
 

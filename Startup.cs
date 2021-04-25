@@ -26,15 +26,26 @@ namespace SportStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProductContext>(opt => opt.UseMySql
-            (Configuration.GetConnectionString("SportShopConnect")));
-
             services.AddControllers();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddDbContext<SportStoreContext>(opt => opt.UseMySql
+            (Configuration.GetConnectionString("SportShopConnect")));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //services.AddScoped<IProductRepository, MockProductRepository>();
             services.AddScoped<IProductRepository, SqlProductRepository>();
+            services.AddScoped<ICustomerRepository, SqlProductRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,9 +56,13 @@ namespace SportStore
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
+
 
             app.UseEndpoints(endpoints =>
             {
