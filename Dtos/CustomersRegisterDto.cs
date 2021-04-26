@@ -1,4 +1,4 @@
-﻿using SportStore.Models;
+﻿using SportStore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace SportStore.Dtos
     {
         public CustomersRegisterDto()
         {
-            CreditCarts = new HashSet<CreditCarts>();
+            CreditCarts = new HashSet<Creditcards>();
             Orders = new HashSet<Orders>();
         }
 
@@ -22,7 +22,7 @@ namespace SportStore.Dtos
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public virtual ICollection<CreditCarts> CreditCarts { get; set; }
+        public virtual ICollection<Creditcards> CreditCarts { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
     }
 }

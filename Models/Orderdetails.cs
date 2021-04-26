@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace SportStore.Models
+namespace SportStore.Model
 {
-    public partial class ProductsOrders
+    public partial class Orderdetails
     {
-        [Key]
+        public int Id { get; set; }
+        public int? Quantity { get; set; }
+        public float? Price { get; set; }
+        public float? Discount { get; set; }
         public int ProductsId { get; set; }
         public int OrdersId { get; set; }
 

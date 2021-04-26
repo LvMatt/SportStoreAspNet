@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportStore.Models
+namespace SportStore.Model
 {
     public partial class Customers
     {
         public Customers()
         {
-            CreditCarts = new HashSet<CreditCarts>();
+            Creditcards = new HashSet<Creditcards>();
             Orders = new HashSet<Orders>();
         }
 
@@ -19,7 +19,7 @@ namespace SportStore.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public virtual ICollection<CreditCarts> CreditCarts { get; set; }
+        public virtual ICollection<Creditcards> Creditcards { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportStore.Models
+namespace SportStore.Model
 {
     public partial class Branches
     {

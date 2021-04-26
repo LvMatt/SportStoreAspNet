@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SportStore.Dtos;
-using SportStore.Models;
+using SportStore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

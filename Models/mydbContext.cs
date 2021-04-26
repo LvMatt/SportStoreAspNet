@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace SportStore.Models
+namespace SportStore.Model
 {
     public partial class mydbContext : DbContext
     {
@@ -16,14 +16,14 @@ namespace SportStore.Models
         }
 
         public virtual DbSet<Branches> Branches { get; set; }
-        public virtual DbSet<CreditCarts> CreditCarts { get; set; }
+        public virtual DbSet<Creditcards> Creditcards { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
+        public virtual DbSet<Orderdetails> Orderdetails { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<ProductCategories> ProductCategories { get; set; }
+        public virtual DbSet<Productratings> Productratings { get; set; }
         public virtual DbSet<Products> Products { get; set; }
-        public virtual DbSet<ProductsCategories> ProductsCategories { get; set; }
-        public virtual DbSet<ProductsOrders> ProductsOrders { get; set; }
         public virtual DbSet<Staff> Staff { get; set; }
         public virtual DbSet<Suppliers> Suppliers { get; set; }
 
@@ -58,12 +58,12 @@ namespace SportStore.Models
                     .HasCollation("utf8_general_ci");
             });
 
-            modelBuilder.Entity<CreditCarts>(entity =>
+            modelBuilder.Entity<Creditcards>(entity =>
             {
-                entity.ToTable("credit_carts");
+                entity.ToTable("creditcards");
 
-                entity.HasIndex(e => e.CustomerId)
-                    .HasName("fk_Credit_cart_Customer1_idx");
+                entity.HasIndex(e => e.CustomersId)
+                    .HasName("fk_creditCards_customers1_idx");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("credit_cart_id_UNIQUE")
@@ -82,11 +82,11 @@ namespace SportStore.Models
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.CreditCarts)
-                    .HasForeignKey(d => d.CustomerId)
+                entity.HasOne(d => d.Customers)
+                    .WithMany(p => p.Creditcards)
+                    .HasForeignKey(d => d.CustomersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Credit_cart_Customer1");
+                    .HasConstraintName("fk_creditCards_customers1");
             });
 
             modelBuilder.Entity<Customers>(entity =>
@@ -132,6 +132,33 @@ namespace SportStore.Models
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
+            });
+
+            modelBuilder.Entity<Orderdetails>(entity =>
+            {
+                entity.ToTable("orderdetails");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.OrdersId)
+                    .HasName("fk_orderDetails_orders1_idx");
+
+                entity.HasIndex(e => e.ProductsId)
+                    .HasName("fk_orderDetails_products1_idx");
+
+                entity.HasOne(d => d.Orders)
+                    .WithMany(p => p.Orderdetails)
+                    .HasForeignKey(d => d.OrdersId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_orderDetails_orders1");
+
+                entity.HasOne(d => d.Products)
+                    .WithMany(p => p.Orderdetails)
+                    .HasForeignKey(d => d.ProductsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_orderDetails_products1");
             });
 
             modelBuilder.Entity<Orders>(entity =>
@@ -187,12 +214,6 @@ namespace SportStore.Models
                     .HasColumnType("varchar(1000)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
-
-                entity.HasOne(d => d.Creditcart)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.CreditcartId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Payment_Credit_cart1");
             });
 
             modelBuilder.Entity<ProductCategories>(entity =>
@@ -212,6 +233,31 @@ namespace SportStore.Models
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
+            });
+
+            modelBuilder.Entity<Productratings>(entity =>
+            {
+                entity.ToTable("productratings");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id_UNIQUE")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.ProductsId)
+                    .HasName("fk_productRatings_products1_idx");
+
+                entity.Property(e => e.Comment)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Products)
+                    .WithMany(p => p.Productratings)
+                    .HasForeignKey(d => d.ProductsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_productRatings_products1");
             });
 
             modelBuilder.Entity<Products>(entity =>
@@ -252,58 +298,6 @@ namespace SportStore.Models
                     .HasForeignKey(d => d.SuppliersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Products_Suppliers");
-            });
-
-            modelBuilder.Entity<ProductsCategories>(entity =>
-            {
-                entity.HasKey(e => new { e.ProductsId, e.ProductCategoriesId })
-                    .HasName("PRIMARY");
-
-                entity.ToTable("products_categories");
-
-                entity.HasIndex(e => e.ProductCategoriesId)
-                    .HasName("fk_products_has_product_categories_product_categories1_idx");
-
-                entity.HasIndex(e => e.ProductsId)
-                    .HasName("fk_products_has_product_categories_products1_idx");
-
-                entity.HasOne(d => d.ProductCategories)
-                    .WithMany(p => p.ProductsCategories)
-                    .HasForeignKey(d => d.ProductCategoriesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_products_has_product_categories_product_categories1");
-
-                entity.HasOne(d => d.Products)
-                    .WithMany(p => p.ProductsCategories)
-                    .HasForeignKey(d => d.ProductsId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_products_has_product_categories_products1");
-            });
-
-            modelBuilder.Entity<ProductsOrders>(entity =>
-            {
-                entity.HasKey(e => new { e.ProductsId, e.OrdersId })
-                    .HasName("PRIMARY");
-
-                entity.ToTable("products_orders");
-
-                entity.HasIndex(e => e.OrdersId)
-                    .HasName("fk_products_has_orders_orders1_idx");
-
-                entity.HasIndex(e => e.ProductsId)
-                    .HasName("fk_products_has_orders_products1_idx");
-
-                entity.HasOne(d => d.Orders)
-                    .WithMany(p => p.ProductsOrders)
-                    .HasForeignKey(d => d.OrdersId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_products_has_orders_orders1");
-
-                entity.HasOne(d => d.Products)
-                    .WithMany(p => p.ProductsOrders)
-                    .HasForeignKey(d => d.ProductsId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_products_has_orders_products1");
             });
 
             modelBuilder.Entity<Staff>(entity =>

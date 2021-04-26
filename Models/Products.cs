@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportStore.Models
+namespace SportStore.Model
 {
     public partial class Products
     {
         public Products()
         {
-            ProductsCategories = new HashSet<ProductsCategories>();
-            ProductsOrders = new HashSet<ProductsOrders>();
+            Orderdetails = new HashSet<Orderdetails>();
+            Productratings = new HashSet<Productratings>();
         }
 
         public int Id { get; set; }
@@ -21,7 +21,7 @@ namespace SportStore.Models
         public string ImageName { get; set; }
 
         public virtual Suppliers Suppliers { get; set; }
-        public virtual ICollection<ProductsCategories> ProductsCategories { get; set; }
-        public virtual ICollection<ProductsOrders> ProductsOrders { get; set; }
+        public virtual ICollection<Orderdetails> Orderdetails { get; set; }
+        public virtual ICollection<Productratings> Productratings { get; set; }
     }
 }
