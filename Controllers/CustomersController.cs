@@ -26,28 +26,39 @@ namespace SportStore.Controllers
 
         }
 
+
         [HttpPost]
         [Route("register")]
-        public ActionResult<Customers> Register(Customers model)
+        public ActionResult<CustomersReadDto> Register(CustomersRegisterDto registerCreateDto)
         {
-            if(ModelState.IsValid)
-            { 
-                Customers customer = new Customers
-                {
-                    Id = model.Id,
-                    Firstname = model.Firstname,
-                    Surname = model.Surname,
-                    Address = model.Address,
-                    Email = model.Email,
-                    Password = model.Password,
-                    Phone = model.Phone
+            if (ModelState.IsValid)
+            {
+                 var customerModel = _mapper.Map<Customers>(registerCreateDto);
+                _customerRepository.Register(customerModel);
+                _customerRepository.SaveChanges();
 
-                    };
-                _customerRepository.Register(customer);
-                return Ok();
+                var customerReadDto = _mapper.Map<CustomersReadDto>(customerModel);
+                return CreatedAtRoute(new { Id = customerReadDto.Id }, customerReadDto);
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "error occurred" });       
+
+
+            
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "error occurred" });
             // return _customerRepository.Register(customer);
+
+            //Customers customer = new Customers
+            //{
+            //    Id = model.Id,
+            //    Firstname = model.Firstname,
+            //    Surname = model.Surname,
+            //    Address = model.Address,
+            //    Email = model.Email,
+            //    Password = model.Password,
+            //    Phone = model.Phone
+
+            //};
+            //_customerRepository.Register(customer);
+            //return Ok();
         }
 
         [HttpPost]

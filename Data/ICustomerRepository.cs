@@ -13,5 +13,6 @@ namespace SportStore.Data
         public void Register(Customers customer);
         public Customers Login(LoginViewModel customer);
         public IEnumerable<Customers> GetAllCustomers();
+        public bool SaveChanges();
     }
 }

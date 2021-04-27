@@ -32,6 +32,11 @@ namespace SportStore.Data
             return _context.Customers.ToList();
         }
 
+        public Customers GetCustomerById(int id)
+        {
+            return _context.Customers.FirstOrDefault(p => p.Id == id);
+        }
+
         public void CreateProducts(Products product)
         {
             if (product == null)

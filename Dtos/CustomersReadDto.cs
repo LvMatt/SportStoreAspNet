@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SportStore.Dtos
 {
-    public class CustomersRegisterDto
+    public class CustomersReadDto
     {
-        public CustomersRegisterDto()
+        public CustomersReadDto()
         {
             Creditcards = new HashSet<Creditcards>();
             Orders = new HashSet<Orders>();

@@ -16,6 +16,9 @@ namespace SportStore.Data
 
         public DbSet<Staff> Staff { get; set; }
         public DbSet<Customers> Customers { get; set; }
+        public DbSet<Orders> Orders { get; set; }
+        public DbSet<Orderdetails> Orderdetails { get; set; }
+
         public DbSet<Products> Products { get; set; }
 
     }

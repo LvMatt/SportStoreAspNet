@@ -60,5 +60,16 @@ namespace SportStore.Controllers
 
             return CreatedAtRoute(nameof(GetProductById), new { Id = productReadDto.Id }, productReadDto);
         }
+
+        [Authorize]
+        [HttpPost]
+        [Route("products/buy/{id}")]
+        public ActionResult AddToCart(int id)
+        {
+            return Ok();
+        }
+
+
+
     }
 }
