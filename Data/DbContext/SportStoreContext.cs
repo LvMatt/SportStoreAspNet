@@ -14,6 +14,11 @@ namespace SportStore.Data
 
         }
 
+        public SportStoreContext() : base()
+        {
+
+        }
+
         public DbSet<Staff> Staff { get; set; }
         public DbSet<Customers> Customers { get; set; }
         public DbSet<Orders> Orders { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SportStore.Data
 {
-    public class SqlProductRepository : ICustomerRepository, IProductRepository
+    public class SqlProductRepository : IProductRepository
     {
         private readonly SportStoreContext _context;
 
@@ -27,15 +27,7 @@ namespace SportStore.Data
             return _context.Products.ToList();
         }
 
-        public IEnumerable<Customers> GetAllCustomers()
-        {
-            return _context.Customers.ToList();
-        }
-
-        public Customers GetCustomerById(int id)
-        {
-            return _context.Customers.FirstOrDefault(p => p.Id == id);
-        }
+       
 
         public void CreateProducts(Products product)
         {
@@ -80,19 +72,6 @@ namespace SportStore.Data
             return customers;
         }
 
-        public Customers Login(LoginViewModel customer)
-        {
-              return _context.Customers.SingleOrDefault(m => m.Firstname == customer.Firstname && m.Password == customer.Password);
-        }
-
-        public void Register(Customers customer)
-        {
-            if (customer == null)
-            {
-                throw new ArgumentNullException(nameof(customer));
-            }
-            _context.Customers.Add(customer);
-        }
 
 
         public bool SaveChanges()

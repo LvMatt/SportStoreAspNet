@@ -44,7 +44,7 @@ namespace SportStore
 
             //services.AddScoped<IProductRepository, MockProductRepository>();
             services.AddScoped<IProductRepository, SqlProductRepository>();
-            services.AddScoped<ICustomerRepository, SqlProductRepository>();
+            services.AddScoped<ICustomerRepository, SqlCustomersRepository>();
 
         }
 
