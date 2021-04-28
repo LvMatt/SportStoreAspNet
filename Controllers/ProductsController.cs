@@ -47,7 +47,7 @@ namespace SportStore.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPost]
         [Route("products")]
         public ActionResult<ProductsReadDto> CreateProducts(ProductsCreateDto productCreateDto)
@@ -58,7 +58,7 @@ namespace SportStore.Controllers
 
             var productReadDto = _mapper.Map<ProductsReadDto>(productModel);
 
-            return CreatedAtRoute(nameof(GetProductById), new { Id = productReadDto.Id }, productReadDto);
+            return CreatedAtRoute(nameof(GetProductById), new { id = productReadDto.Id }, productReadDto);
         }
 
         [Authorize]
@@ -69,7 +69,28 @@ namespace SportStore.Controllers
             return Ok();
         }
 
+        /*[Authorize]*/
+        [HttpPut]
+        [Route("products/{id}")]
+        public ActionResult UpdateProducts(Products productModel)
+        {
+            /*var productModel = _mapper.Map<Products>(productCreateDto);*/
+            _productRepository.UpdateProduct(productModel);
+            _productRepository.SaveChanges();
 
+           /* var productReadDto = _mapper.Map<ProductsReadDto>(productModel);*/
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("products/{id}")]
+        public ActionResult DeleteProducts(int id)
+        {
+            _productRepository.DeleteProduct(id);
+            _productRepository.SaveChanges();
+            return Ok();
+        }
 
     }
 }

@@ -12,6 +12,7 @@ namespace SportStore.Data
         IEnumerable<Products> GetAllProducts();
         Products GetProductById(int id);
         void CreateProducts(Products product);
-      
+        void UpdateProduct(Products product);
+        void DeleteProduct(int id);
     }
 }
