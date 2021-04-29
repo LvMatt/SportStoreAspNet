@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace SportStore.Models
 {
-    public partial class ProductCategories
+    public partial class Productcategories
     {
-        public ProductCategories()
+        public Productcategories()
         {
             Products = new HashSet<Products>();
         }

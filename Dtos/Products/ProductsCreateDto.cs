@@ -10,7 +10,7 @@ namespace SportStore.Dtos
     {
         public ProductsCreateDto()
         {
-            ProductsCategories = new HashSet<ProductCategories>();
+            ProductsCategories = new HashSet<Productcategories>();
             ProductsOrders = new HashSet<Orderdetails>();
         }
 
@@ -24,7 +24,7 @@ namespace SportStore.Dtos
         public string ImageName { get; set; }
 
         public virtual Suppliers Suppliers { get; set; }
-        public virtual ICollection<ProductCategories> ProductsCategories { get; set; }
+        public virtual ICollection<Productcategories> ProductsCategories { get; set; }
         public virtual ICollection<Orderdetails> ProductsOrders { get; set; }
     }
 }

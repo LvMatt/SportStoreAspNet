@@ -88,6 +88,15 @@ namespace SportStore.Controllers
             return productRatings;
         }
 
+
+        [HttpGet]
+        [Route("product/ratings/{pId}")]
+        public IQueryable<string> GetAllRatingsByProductId(int pId)
+        {
+            var productRating = _productRepository.GetAllProductRatingsByProductId(pId);
+            return productRating;
+        }
+
         /*[Authorize]*/
         [HttpPut]
         [Route("products/{id}")]

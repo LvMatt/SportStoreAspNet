@@ -21,7 +21,7 @@ namespace SportStore.Models
         public virtual DbSet<Orderdetails> Orderdetails { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
-        public virtual DbSet<ProductCategories> ProductCategories { get; set; }
+        public virtual DbSet<Productcategories> ProductCategories { get; set; }
         public virtual DbSet<Productratings> Productratings { get; set; }
         public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Staff> Staff { get; set; }
@@ -216,7 +216,7 @@ namespace SportStore.Models
                     .HasCollation("utf8_general_ci");
             });
 
-            modelBuilder.Entity<ProductCategories>(entity =>
+            modelBuilder.Entity<Productcategories>(entity =>
             {
                 entity.ToTable("product_categories");
 

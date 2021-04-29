@@ -12,6 +12,8 @@ namespace SportStore.Data
         bool SaveChanges();
         IEnumerable<Products> GetAllProducts();
         IEnumerable<Productratings> GetAllProductRatings();
+        public IQueryable<string> GetAllProductRatingsByProductId(int id);
+
 
         Products GetProductById(int id);
         void CreateProducts(Products product);

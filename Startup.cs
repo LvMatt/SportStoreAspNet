@@ -38,6 +38,12 @@ namespace SportStore
                 options.Cookie.IsEssential = true;
             });
 
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+
             services.AddDbContext<SportStoreContext>(opt => opt.UseMySql
             (Configuration.GetConnectionString("SportShopConnect")));
 

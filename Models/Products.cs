@@ -22,7 +22,7 @@ namespace SportStore.Models
         public int ProductCategoriesId { get; set; }
         public float? OverallRating { get; set; }
 
-        public virtual ProductCategories ProductCategories { get; set; }
+        public virtual Productcategories ProductCategories { get; set; }
         public virtual Suppliers Suppliers { get; set; }
         public virtual ICollection<Orderdetails> Orderdetails { get; set; }
         public virtual ICollection<Productratings> Productratings { get; set; }

@@ -1,4 +1,5 @@
-﻿using SportStore.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SportStore.Models;
 using SportStore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -79,6 +80,7 @@ namespace SportStore.Data
 
             ratings.CustomersId = cId.Id;
             ratings.ProductsId = pId.Id;
+            
             _context.Productratings.Add(ratings);
 
         }
@@ -86,7 +88,12 @@ namespace SportStore.Data
         public IEnumerable<Productratings> GetAllProductRatings()
         {
             var ratings = _context.Productratings.ToList();
-            return ratings;
+            var teacher = _context.Productratings.Include(x => x.Products);
+
+
+            // _context.Productratings.Include(c => c.ProductsId).ToList();
+            // _context.Productratings.Include(c => c.Products).ToList();
+            return teacher;
         }
 
 
@@ -96,6 +103,15 @@ namespace SportStore.Data
             return (_context.SaveChanges() >= 0);
         }
 
-       
+        public IQueryable<string> GetAllProductRatingsByProductId(int id)
+        {
+            var productRatings = _context.Productratings
+                .Include(x => x.Customers)
+                .Where(x => x.ProductsId == id);
+            var selectComments = productRatings
+                .Select(x  => x.Comment );
+            return selectComments;
+
+        }
     }
 }

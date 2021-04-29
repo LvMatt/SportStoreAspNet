@@ -76,3 +76,8 @@ C:\Users\jcoyn\Documents\SportStoreAspNet\obj\Debug\netcoreapp3.1\SportStore.Ass
 C:\Users\jcoyn\Documents\SportStoreAspNet\obj\Debug\netcoreapp3.1\SportStore.AssemblyInfo.cs
 C:\Users\jcoyn\Documents\SportStoreAspNet\obj\Debug\netcoreapp3.1\SportStore.RazorTargetAssemblyInfo.cache
 C:\Users\jcoyn\Documents\SportStoreAspNet\obj\Debug\netcoreapp3.1\SportStore.csproj.CopyComplete
+C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
