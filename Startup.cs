@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SportStore.Data;
+using SportStore.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +43,8 @@ namespace SportStore
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            //services.AddScoped<IProductRepository, MockProductRepository>();
-            services.AddScoped<IProductRepository, SqlProductRepository>();
-            services.AddScoped<ICustomerRepository, SqlCustomersRepository>();
+            services.AddCloudscribeCore();
+
 
         }
 

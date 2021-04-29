@@ -49,6 +49,7 @@ namespace SportStore.Data
                 catch (Exception ex)
                 {
                     transaction.Rollback();
+                    throw ex;
                 }
             }
         }
