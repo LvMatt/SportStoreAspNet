@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data;
 using SportStore.Dtos;
-using SportStore.Model;
+using SportStore.Models;
 using SportStore.ViewModels;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data;
 using SportStore.Dtos;
-using SportStore.Model;
+using SportStore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +33,6 @@ namespace SportStore.Controllers
         {
             var productItems = _productRepository.GetAllProducts();
             return Ok(_mapper.Map<IEnumerable<ProductsReadDto>>(productItems));
-           
         }
 
         [HttpGet("products/{id}")]
@@ -61,12 +60,32 @@ namespace SportStore.Controllers
             return CreatedAtRoute(nameof(GetProductById), new { id = productReadDto.Id }, productReadDto);
         }
 
+        [HttpPost]
+        [Route("review/product/{pId}/user/{uId}")]
+        public ActionResult<ProductsReadDto> ReivewProduct(Productratings ratings, int pId, int uId)
+        {
+            _productRepository.CreateProductReview(ratings, uId, pId);
+            _productRepository.SaveChanges();
+            return Ok();
+        }
+
+
+
+
         [Authorize]
         [HttpPost]
         [Route("products/buy/{id}")]
         public ActionResult AddToCart(int id)
         {
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("product/ratings")]
+        public IEnumerable<Productratings> GetAllProductRatings()
+        {
+            var productRatings = _productRepository.GetAllProductRatings();
+            return productRatings;
         }
 
         /*[Authorize]*/

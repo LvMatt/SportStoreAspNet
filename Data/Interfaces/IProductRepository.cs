@@ -1,4 +1,5 @@
-﻿using SportStore.Model;
+﻿using SportStore.Models;
+using SportStore.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,12 @@ namespace SportStore.Data
     {
         bool SaveChanges();
         IEnumerable<Products> GetAllProducts();
+        IEnumerable<Productratings> GetAllProductRatings();
+
         Products GetProductById(int id);
         void CreateProducts(Products product);
         void UpdateProduct(Products product);
         void DeleteProduct(int id);
+        void CreateProductReview(Productratings ratings, int userId, int productId);
     }
 }

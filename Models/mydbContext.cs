@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace SportStore.Model
+namespace SportStore.Models
 {
     public partial class mydbContext : DbContext
     {
@@ -239,6 +239,9 @@ namespace SportStore.Model
             {
                 entity.ToTable("productratings");
 
+                entity.HasIndex(e => e.CustomersId)
+                    .HasName("fk_productratings_customers1_idx");
+
                 entity.HasIndex(e => e.Id)
                     .HasName("Id_UNIQUE")
                     .IsUnique();
@@ -252,6 +255,12 @@ namespace SportStore.Model
                     .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Customers)
+                    .WithMany(p => p.Productratings)
+                    .HasForeignKey(d => d.CustomersId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_productratings_customers1");
 
                 entity.HasOne(d => d.Products)
                     .WithMany(p => p.Productratings)
@@ -267,6 +276,9 @@ namespace SportStore.Model
                 entity.HasIndex(e => e.Id)
                     .HasName("products_id_UNIQUE")
                     .IsUnique();
+
+                entity.HasIndex(e => e.ProductCategoriesId)
+                    .HasName("fk_products_product_categories1_idx");
 
                 entity.HasIndex(e => e.SuppliersId)
                     .HasName("fk_Products_Suppliers_idx");
@@ -292,6 +304,12 @@ namespace SportStore.Model
                 entity.Property(e => e.Price).HasColumnType("decimal(10,0)");
 
                 entity.Property(e => e.Weight).HasColumnType("decimal(10,0)");
+
+                entity.HasOne(d => d.ProductCategories)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.ProductCategoriesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_products_product_categories1");
 
                 entity.HasOne(d => d.Suppliers)
                     .WithMany(p => p.Products)

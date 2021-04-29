@@ -1,9 +1,12 @@
-﻿using System;
+﻿using SportStore.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace SportStore.Models
+namespace SportStore.ViewModels
 {
-    public partial class Productratings
+    public class RatingsViewModel
     {
         public int Id { get; set; }
         public int? Ratings { get; set; }

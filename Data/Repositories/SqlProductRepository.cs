@@ -1,4 +1,4 @@
-﻿using SportStore.Model;
+﻿using SportStore.Models;
 using SportStore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -72,6 +72,23 @@ namespace SportStore.Data
             return customers;
         }
 
+        public void CreateProductReview(Productratings ratings, int userId, int productId)
+        {
+            var pId = _context.Products.FirstOrDefault(p => p.Id == productId);
+            var cId = _context.Customers.FirstOrDefault(p => p.Id == userId);
+
+            ratings.CustomersId = cId.Id;
+            ratings.ProductsId = pId.Id;
+            _context.Productratings.Add(ratings);
+
+        }
+
+        public IEnumerable<Productratings> GetAllProductRatings()
+        {
+            var ratings = _context.Productratings.ToList();
+            return ratings;
+        }
+
 
 
         public bool SaveChanges()
@@ -79,5 +96,6 @@ namespace SportStore.Data
             return (_context.SaveChanges() >= 0);
         }
 
+       
     }
 }

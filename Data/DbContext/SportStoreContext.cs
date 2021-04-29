@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SportStore.Model;
+using SportStore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +25,8 @@ namespace SportStore.Data
         public DbSet<Orderdetails> Orderdetails { get; set; }
 
         public DbSet<Products> Products { get; set; }
+        public DbSet<Productratings> Productratings { get; set; }
+
 
     }
 }

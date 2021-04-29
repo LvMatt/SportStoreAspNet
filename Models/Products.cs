@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportStore.Model
+namespace SportStore.Models
 {
     public partial class Products
     {
@@ -19,7 +19,10 @@ namespace SportStore.Model
         public byte[] ImageData { get; set; }
         public decimal? Weight { get; set; }
         public string ImageName { get; set; }
+        public int ProductCategoriesId { get; set; }
+        public float? OverallRating { get; set; }
 
+        public virtual ProductCategories ProductCategories { get; set; }
         public virtual Suppliers Suppliers { get; set; }
         public virtual ICollection<Orderdetails> Orderdetails { get; set; }
         public virtual ICollection<Productratings> Productratings { get; set; }

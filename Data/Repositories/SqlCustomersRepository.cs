@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SportStore.Model;
+using SportStore.Models;
 using SportStore.ViewModels;
 using System;
 using System.Collections.Generic;

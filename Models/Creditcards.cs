@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportStore.Model
+namespace SportStore.Models
 {
     public partial class Creditcards
     {

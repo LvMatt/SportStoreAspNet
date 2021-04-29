@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportStore.Model
+namespace SportStore.Models
 {
     public partial class Customers
     {
@@ -9,6 +9,7 @@ namespace SportStore.Model
         {
             Creditcards = new HashSet<Creditcards>();
             Orders = new HashSet<Orders>();
+            Productratings = new HashSet<Productratings>();
         }
 
         public int Id { get; set; }
@@ -21,5 +22,6 @@ namespace SportStore.Model
 
         public virtual ICollection<Creditcards> Creditcards { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Productratings> Productratings { get; set; }
     }
 }
