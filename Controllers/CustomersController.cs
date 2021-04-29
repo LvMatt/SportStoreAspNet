@@ -42,23 +42,7 @@ namespace SportStore.Controllers
             }
 
 
-            
             return StatusCode(StatusCodes.Status500InternalServerError, new { message = "error occurred" });
-            // return _customerRepository.Register(customer);
-
-            //Customers customer = new Customers
-            //{
-            //    Id = model.Id,
-            //    Firstname = model.Firstname,
-            //    Surname = model.Surname,
-            //    Address = model.Address,
-            //    Email = model.Email,
-            //    Password = model.Password,
-            //    Phone = model.Phone
-
-            //};
-            //_customerRepository.Register(customer);
-            //return Ok();
         }
 
         [HttpPost]
@@ -75,7 +59,18 @@ namespace SportStore.Controllers
                 HttpContext.Session.SetString("userId", customerDetails.Firstname);
                 return Ok();
 
-          }
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        public IActionResult Logout()
+        {
+            if (HttpContext.Session != null)
+                BadRequest("Session is unset");
+            HttpContext.Session.Clear();
+            return Ok();
+        }
+
 
         [HttpGet]
         [Route("customers")]
