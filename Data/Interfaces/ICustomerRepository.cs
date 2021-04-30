@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportStore.Models;
+using SportStore.Options;
 using SportStore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace SportStore.Data
 {
     public interface ICustomerRepository
     {
-        public void Register(Customers customer);
+        public  Task<AuthenticationResult> Register(Customers customer);
         public Customers Login(LoginViewModel customer);
         public IEnumerable<Customers> GetAllCustomers();
         public bool SaveChanges();

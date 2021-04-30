@@ -14,6 +14,9 @@ namespace SportStore.Data
         IEnumerable<Productratings> GetAllProductRatings();
         public IQueryable<string> GetAllProductRatingsByProductId(int id);
 
+        public IEnumerable<Products> SortProductsByType(string sortType);
+
+
 
         Products GetProductById(int id);
         void CreateProducts(Products product);

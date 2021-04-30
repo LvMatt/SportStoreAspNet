@@ -113,5 +113,20 @@ namespace SportStore.Data
             return selectComments;
 
         }
+
+        public IEnumerable<Products> SortProductsByType(string sortType)
+        {
+            var products = _context.Products;
+            switch (sortType)
+            {
+                case "priceUp":
+                    return products.OrderByDescending(x => x.Price);
+                case "priceDown":
+                    return products.OrderBy(x => x.Price);
+                default:
+                    break;
+            }
+            return products;
+        }
     }
 }

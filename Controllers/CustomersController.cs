@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SportStore.Data;
 using SportStore.Dtos;
 using SportStore.Models;
+using SportStore.Options;
 using SportStore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,21 +28,51 @@ namespace SportStore.Controllers
         }
 
 
+        //[HttpPost]
+        //[Route("register")]
+        //public  async Task<IActionResult> Register(Customers customerModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // var customerModel = _mapper.Map<Customers>(registerCreateDto);
+        //        var authResponse =  await _customerRepository.Register(customerModel);
+        //        authResponse.
+        //        //authResponse.Suc
+        //        //_customerRepository.SaveChanges();
+        //        var customerReadDto = _mapper.Map<CustomersReadDto>(customerModel);
+        //        return Ok(customerReadDto);
+        //        //return CreatedAtRoute(new { Id = customerReadDto.Id }, customerReadDto);
+
+        //    }
+
+
+        //    return StatusCode(StatusCodes.Status500InternalServerError, new { message = "error occurred" });
+        //}
+
         [HttpPost]
         [Route("register")]
-        public ActionResult<CustomersReadDto> Register(CustomersRegisterDto registerCreateDto)
+        public async Task<IActionResult> Register(CustomersRegisterDto registerCreateDto)
         {
             if (ModelState.IsValid)
             {
-                 var customerModel = _mapper.Map<Customers>(registerCreateDto);
-                _customerRepository.Register(customerModel);
+                var customerModel = _mapper.Map<Customers>(registerCreateDto);
+                var authResponse = await _customerRepository.Register(customerModel);
+                if(!authResponse.Success)
+                {
+                    return BadRequest(new AuthFailedResponse
+                    {
+                        Errors = authResponse.Errors
+                    });
+                }
                 _customerRepository.SaveChanges();
+                _mapper.Map<CustomersReadDto>(customerModel);
+                return Ok(new AuthSuccessResponse
+                {
+                    Token = authResponse.Token
+                });
+                //return CreatedAtRoute(new { Id = customerReadDto.Id }, customerReadDto);
 
-                var customerReadDto = _mapper.Map<CustomersReadDto>(customerModel);
-                return CreatedAtRoute(new { Id = customerReadDto.Id }, customerReadDto);
             }
-
-
             return StatusCode(StatusCodes.Status500InternalServerError, new { message = "error occurred" });
         }
 

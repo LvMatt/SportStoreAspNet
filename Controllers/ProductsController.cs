@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,12 +28,21 @@ namespace SportStore.Controllers
 
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         [Route("products")]
         public ActionResult<IEnumerable<Products>> GetAllProducts()
         {
             var productItems = _productRepository.GetAllProducts();
             return Ok(_mapper.Map<IEnumerable<ProductsReadDto>>(productItems));
+        }
+
+        [HttpGet]
+        [Route("products/sort/{sortType}")]
+        public ActionResult<IEnumerable<Products>> GetAllProductsBySort(string sortType)
+        {
+            var productItems = _productRepository.SortProductsByType(sortType);
+            return Ok(productItems);
         }
 
         [HttpGet("products/{id}")]
@@ -47,6 +57,7 @@ namespace SportStore.Controllers
         }
 
         /*[Authorize]*/
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("products")]
         public ActionResult<ProductsReadDto> CreateProducts(ProductsCreateDto productCreateDto)
