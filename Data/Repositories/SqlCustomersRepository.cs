@@ -36,8 +36,32 @@ namespace SportStore.Data
 
         public async Task<AuthenticationResult> Login(LoginViewModel customer)
         {
-            var user =  _context.Customers.SingleOrDefault(m => m.Firstname == customer.Firstname && m.Password == customer.Password);
+            var encPassword = Encryptdata(customer.Password);
+            var decPassword = Decryptdata(encPassword);
+            var user =  _context.Customers.SingleOrDefault(m => m.Email == customer.Email && m.Password == encPassword);
             return GenerateToken(user);  
+        }
+
+        public string Encryptdata(string password)
+        {
+            string strmsg = string.Empty;
+            byte[] encode = new byte[password.Length];
+            encode = Encoding.UTF8.GetBytes(password);
+            strmsg = Convert.ToBase64String(encode);
+            return strmsg;
+        }
+
+        public static string Decryptdata(string encryptpwd)
+        {
+            string decryptpwd = string.Empty;
+            UTF8Encoding encodepwd = new UTF8Encoding();
+            Decoder Decode = encodepwd.GetDecoder();
+            byte[] todecode_byte = Convert.FromBase64String(encryptpwd);
+            int charCount = Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+            char[] decoded_char = new char[charCount];
+            Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+            decryptpwd = new String(decoded_char);
+            return decryptpwd;
         }
 
         public async Task<AuthenticationResult> Register(Customers customer)
@@ -61,9 +85,9 @@ namespace SportStore.Data
                             Errors = new[] { "You didnt fill form validation" }
                         };
                     }
-                    var password = _context.Customers.FirstOrDefault(x => x.Password == customer.Password);
-                    byte[] b = ASCIIEncoding.ASCII.GetBytes(password.ToString());
-                    string encrypted = Convert.ToBase64String(b);
+                    var encPassword = Encryptdata(customer.Password);
+                    // var newEncPassword = _context.Customers.FirstOrDefault(x => x.Password == encPassword);
+                    customer.Password = encPassword.ToString();
                     _context.Customers.Add(customer);
                     _context.SaveChanges();
 
