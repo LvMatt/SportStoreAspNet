@@ -15,7 +15,7 @@ namespace SportStore.Data.Interfaces
         void CreateOrder(Orders order);
         void UpdateOrder(Orders order);
         void DeleteOrder(int id);
-        IEnumerable<Orderdetails> GetOrderDetails();
+        IEnumerable<Orderdetails> GetOrderDetails(int id);
 
     }
 }

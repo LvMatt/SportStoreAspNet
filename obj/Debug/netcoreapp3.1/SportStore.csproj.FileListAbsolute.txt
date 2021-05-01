@@ -68,7 +68,6 @@ C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\Newtonsoft.Jso
 C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
 C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\jcoyn\Documents\SportStoreAspNet\obj\Debug\netcoreapp3.1\SportStore.csprojAssemblyReference.cache
 C:\Users\jcoyn\Documents\SportStoreAspNet\obj\Debug\netcoreapp3.1\staticwebassets\SportStore.StaticWebAssets.Manifest.cache
 C:\Users\jcoyn\Documents\SportStoreAspNet\obj\Debug\netcoreapp3.1\staticwebassets\SportStore.StaticWebAssets.xml
 C:\Users\jcoyn\Documents\SportStoreAspNet\obj\Debug\netcoreapp3.1\SportStore.MvcApplicationPartsAssemblyInfo.cache
@@ -81,3 +80,8 @@ C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Micros
 C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\45501\source\repos\SportStore\SportStore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\jcoyn\Documents\SportStoreAspNet\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll

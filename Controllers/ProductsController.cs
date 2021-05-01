@@ -28,7 +28,7 @@ namespace SportStore.Controllers
 
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         [Route("products")]
         public ActionResult<IEnumerable<Products>> GetAllProducts()
