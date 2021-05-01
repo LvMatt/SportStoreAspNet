@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data;
@@ -9,6 +11,7 @@ using SportStore.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SportStore.Controllers
@@ -78,17 +81,19 @@ namespace SportStore.Controllers
 
         [HttpPost]
         [Route("login")]
-        public ActionResult<Customers> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
 
-                var customerDetails = _customerRepository.Login(model);
+                var customerDetails =  await _customerRepository.Login(model);
                 if (customerDetails == null)
                 {
                     ModelState.AddModelError("Password", "Invalid login attempt.");
                     return StatusCode(StatusCodes.Status400BadRequest, new { message = "error occurred" });
                 }
-                HttpContext.Session.SetString("userId", customerDetails.Firstname);
-                return Ok();
+                //HttpContext.Session.SetString("userId", customerDetails.Firstname);
+                return Ok(new AuthSuccessResponse { 
+                    Token = customerDetails.Token
+                });
 
         }
 
@@ -103,6 +108,7 @@ namespace SportStore.Controllers
         }
 
 
+       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         [Route("customers")]
         public ActionResult<IEnumerable<Customers>> GetAllCustomers()

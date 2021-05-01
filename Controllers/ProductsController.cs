@@ -45,6 +45,19 @@ namespace SportStore.Controllers
             return Ok(productItems);
         }
 
+        [HttpGet]
+        [Route("products/sort={sortType}/search={productParameter}")]
+        public ActionResult<IEnumerable<Products>> SerachProduct(string sortType, string productParameter)
+        {
+            var products = _productRepository.GetAllProducts();
+            if (productParameter == "")
+                return Ok(products);
+            var searchedProduct = _productRepository.SearchFilterProduct(products, sortType,productParameter);
+            return Ok(_mapper.Map<IEnumerable<ProductsReadDto>>(searchedProduct));
+        }
+
+
+
         [HttpGet("products/{id}")]
         public ActionResult<ProductsReadDto> GetProductById(int id)
         {

@@ -17,7 +17,7 @@ namespace SportStore.Data
         public IEnumerable<Products> SortProductsByType(string sortType);
 
 
-
+        public List<Products> SearchFilterProduct(IEnumerable<Products> products, string sortType, string searchParam);
         Products GetProductById(int id);
         void CreateProducts(Products product);
         void UpdateProduct(Products product);

@@ -80,7 +80,13 @@ namespace SportStore.Data
 
             ratings.CustomersId = cId.Id;
             ratings.ProductsId = pId.Id;
-            
+
+            if (_context.Productratings.Any(c => c.CustomersId == userId))
+            { 
+                return;
+            }
+
+
             _context.Productratings.Add(ratings);
 
         }
@@ -88,12 +94,10 @@ namespace SportStore.Data
         public IEnumerable<Productratings> GetAllProductRatings()
         {
             var ratings = _context.Productratings.ToList();
-            var teacher = _context.Productratings.Include(x => x.Products);
-
-
+            var ratingsComments = _context.Productratings.Include(x => x.Products).Include(x => x.Customers);
+            return ratingsComments;
             // _context.Productratings.Include(c => c.ProductsId).ToList();
             // _context.Productratings.Include(c => c.Products).ToList();
-            return teacher;
         }
 
 
@@ -127,6 +131,30 @@ namespace SportStore.Data
                     break;
             }
             return products;
+        }
+
+        public List<Products> SearchFilterProduct(IEnumerable<Products> products, string sortType, string searchParam)
+        {
+            // var products = _context.Products.ToList();
+
+            if (String.IsNullOrEmpty(searchParam) || searchParam == "")
+            {
+                return products.ToList();
+                // owners = owners.Where(o => o.Name.ToLower().Contains(ownerName.Trim().ToLower()));
+            }
+            products = products.Where(o => o.Name.ToLower().Contains(searchParam.Trim().ToLower()));
+            switch (sortType)
+            {
+                case "priceUp":
+                    return products.OrderByDescending(x => x.Price).ToList();
+                case "priceDown":
+                    return products.OrderBy(x => x.Price).ToList();
+                default:
+                    break;
+            }
+
+            return products.ToList();
+
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SportStore.Data
     public interface ICustomerRepository
     {
         public  Task<AuthenticationResult> Register(Customers customer);
-        public Customers Login(LoginViewModel customer);
+        public  Task<AuthenticationResult> Login(LoginViewModel customer);
         public IEnumerable<Customers> GetAllCustomers();
         public bool SaveChanges();
     }
