@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MySql.Data.MySqlClient;
 using SportStore.Models;
 using SportStore.Options;
 using SportStore.ViewModels;
@@ -66,10 +67,11 @@ namespace SportStore.Data
 
         public async Task<AuthenticationResult> Register(Customers customer)
         {
-            //using (var transaction = _context.Database.BeginTransaction())
-            //{
-            //    try
-            //    {
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
                     var existingUser = _context.Customers.SingleOrDefault(m => m.Email == customer.Email);
                     if (existingUser != null)
                     {
@@ -86,20 +88,19 @@ namespace SportStore.Data
                         };
                     }
                     var encPassword = Encryptdata(customer.Password);
-                    // var newEncPassword = _context.Customers.FirstOrDefault(x => x.Password == encPassword);
                     customer.Password = encPassword.ToString();
                     _context.Customers.Add(customer);
                     _context.SaveChanges();
-
-            return GenerateToken(customer);
-
-                    
-                //catch (Exception ex)
-                //{
-                //    transaction.Rollback();
-                //    throw ex;
-                //}
-}
+                    transaction.Commit();
+                    return GenerateToken(customer);
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
         private AuthenticationResult GenerateToken(Customers customer)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SportStore.Controllers
 {
-    [Route("api/")]
+    [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -30,7 +30,6 @@ namespace SportStore.Controllers
 
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
-        [Route("products")]
         public ActionResult<IEnumerable<Products>> GetAllProducts()
         {
             var productItems = _productRepository.GetAllProducts();
@@ -38,7 +37,7 @@ namespace SportStore.Controllers
         }
 
         [HttpGet]
-        [Route("products/sort/{sortType}")]
+        [Route("sort/{sortType}")]
         public ActionResult<IEnumerable<Products>> GetAllProductsBySort(string sortType)
         {
             var productItems = _productRepository.SortProductsByType(sortType);
@@ -46,7 +45,7 @@ namespace SportStore.Controllers
         }
 
         [HttpGet]
-        [Route("products/sort={sortType}/search={productParameter}")]
+        [Route("sort={sortType}/search={productParameter}")]
         public ActionResult<IEnumerable<Products>> SerachProduct(string sortType, string productParameter)
         {
             var products = _productRepository.GetAllProducts();
@@ -58,7 +57,7 @@ namespace SportStore.Controllers
 
 
 
-        [HttpGet("products/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<ProductsReadDto> GetProductById(int id)
         {
             var productItems = _productRepository.GetProductById(id);
@@ -72,7 +71,6 @@ namespace SportStore.Controllers
         /*[Authorize]*/
         // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        [Route("products")]
         public ActionResult<ProductsReadDto> CreateProducts(ProductsCreateDto productCreateDto)
         {
             var productModel = _mapper.Map<Products>(productCreateDto);

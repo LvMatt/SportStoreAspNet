@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportStore.Data.Interfaces;
@@ -58,6 +60,8 @@ namespace SportStore.Controllers
             _orderRepository.DeleteOrder(id);
             return Ok();
         }
+
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         [Route("orderdetails")]
         public ActionResult AddToOrder(Orderdetails order)

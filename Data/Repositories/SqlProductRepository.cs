@@ -47,13 +47,15 @@ namespace SportStore.Data
                 throw new ArgumentNullException(nameof(newproduct));
             }
 
+            var allproducts = _context.Products.ToList().Count();
+
             var oldproduct = _context.Products.FirstOrDefault(p => p.Id == newproduct.Id);
             if (oldproduct != null)
             {
                 oldproduct.Id = newproduct.Id;
                 oldproduct.SuppliersId = newproduct.SuppliersId;
                 oldproduct.Name = newproduct.Name;
-                oldproduct.Price = newproduct.Price;
+                oldproduct.Price = newproduct.Price / allproducts;
                 oldproduct.Description = newproduct.Description;
                 oldproduct.ImageData = newproduct.ImageData;
                 oldproduct.Weight = newproduct.Weight;
@@ -73,6 +75,7 @@ namespace SportStore.Data
             return customers;
         }
 
+
         public void CreateProductReview(Productratings ratings, int userId, int productId)
         {
             var pId = _context.Products.FirstOrDefault(p => p.Id == productId);
@@ -81,12 +84,19 @@ namespace SportStore.Data
             ratings.CustomersId = cId.Id;
             ratings.ProductsId = pId.Id;
 
-            if (_context.Productratings.Any(c => c.CustomersId == userId))
+            if (!_context.Productratings.Any(c => c.CustomersId == userId))
             { 
                 return;
             }
+            var products = _context.Products.ToList();
 
+            if (ratings != null )
+            {
+                pId.OverallRating = (pId.OverallRating + Convert.ToInt32(ratings.Ratings));
+                UpdateProduct(pId);
+                _context.SaveChanges();
 
+            }
             _context.Productratings.Add(ratings);
 
         }

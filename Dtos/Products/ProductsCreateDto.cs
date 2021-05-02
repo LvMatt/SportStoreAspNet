@@ -10,8 +10,8 @@ namespace SportStore.Dtos
     {
         public ProductsCreateDto()
         {
-            ProductsCategories = new HashSet<Productcategories>();
-            ProductsOrders = new HashSet<Orderdetails>();
+            Orderdetails = new HashSet<Orderdetails>();
+            Productratings = new HashSet<Productratings>();
         }
 
         public int Id { get; set; }
@@ -22,9 +22,12 @@ namespace SportStore.Dtos
         public byte[] ImageData { get; set; }
         public decimal? Weight { get; set; }
         public string ImageName { get; set; }
+        public int ProductCategoriesId { get; set; }
+        public float? OverallRating { get; set; }
 
+        public virtual Productcategories ProductCategories { get; set; }
         public virtual Suppliers Suppliers { get; set; }
-        public virtual ICollection<Productcategories> ProductsCategories { get; set; }
-        public virtual ICollection<Orderdetails> ProductsOrders { get; set; }
+        public virtual ICollection<Orderdetails> Orderdetails { get; set; }
+        public virtual ICollection<Productratings> Productratings { get; set; }
     }
 }

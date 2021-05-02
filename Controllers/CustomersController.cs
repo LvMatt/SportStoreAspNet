@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace SportStore.Controllers
 {
-    [Route("api/")]
+    [Route("api/customers/")]
     [ApiController]
     public class CustomersController : Controller
     {
@@ -30,27 +30,6 @@ namespace SportStore.Controllers
 
         }
 
-
-        //[HttpPost]
-        //[Route("register")]
-        //public  async Task<IActionResult> Register(Customers customerModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // var customerModel = _mapper.Map<Customers>(registerCreateDto);
-        //        var authResponse =  await _customerRepository.Register(customerModel);
-        //        authResponse.
-        //        //authResponse.Suc
-        //        //_customerRepository.SaveChanges();
-        //        var customerReadDto = _mapper.Map<CustomersReadDto>(customerModel);
-        //        return Ok(customerReadDto);
-        //        //return CreatedAtRoute(new { Id = customerReadDto.Id }, customerReadDto);
-
-        //    }
-
-
-        //    return StatusCode(StatusCodes.Status500InternalServerError, new { message = "error occurred" });
-        //}
 
         [HttpPost]
         [Route("register")]
@@ -108,9 +87,8 @@ namespace SportStore.Controllers
         }
 
 
-       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+  //      [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
-        [Route("customers")]
         public ActionResult<IEnumerable<Customers>> GetAllCustomers()
         {
             var customers = _customerRepository.GetAllCustomers();
