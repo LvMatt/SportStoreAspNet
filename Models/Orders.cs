@@ -12,7 +12,7 @@ namespace SportStore.Models
 
         public int Id { get; set; }
         public decimal? Amount { get; set; }
-        public int PaymentId { get; set; }
+        public int? PaymentId { get; set; }
         public int CartId { get; set; }
         public int BranchesId { get; set; }
         public int CustomersId { get; set; }

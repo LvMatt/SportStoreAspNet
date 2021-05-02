@@ -35,6 +35,7 @@ namespace SportStore.Data.Repositories
         public void CreateOrder(Orders order)
         {
             _context.Add(order);
+            _context.SaveChanges();
         }
         public void UpdateOrder(Orders neworder)
         {
@@ -53,6 +54,7 @@ namespace SportStore.Data.Repositories
                 oldorder.BranchesId = neworder.BranchesId;
                 oldorder.CustomersId = neworder.CustomersId;
             }
+            _context.SaveChanges();
         }
 
         public IEnumerable<Orderdetails> GetOrderDetails(int id)
@@ -73,12 +75,34 @@ namespace SportStore.Data.Repositories
                     _context.Orderdetails.Remove(detail);
                 }
             }
-            
+
+            _context.SaveChanges();
             /*var oldlist = _context.Orderdetails.ToList();
             oldlist.RemoveAll(x => x.OrdersId == id);
             _context.Orderdetails = oldlist;*/
         }
+        
+        enum Result {Added, InvalidProduct, InvalidOrder }
 
-       
+        public int AddToOrder(Orderdetails orderdetails)
+        {
+            var product = _context.Products.FirstOrDefault(x => x.Id == orderdetails.ProductsId);
+            if (product == null) return (int)Result.InvalidProduct;
+            _context.Orderdetails.Add(orderdetails);
+            var order = _context.Orders.FirstOrDefault(x => x.Id == orderdetails.OrdersId);
+
+            if(order != null)
+            {
+                order.Amount = order.Amount + Convert.ToDecimal(orderdetails.Price);
+                UpdateOrder(order);
+                _context.SaveChanges();
+            }
+            else
+            {
+                return (int)Result.InvalidOrder;
+            }
+            _context.SaveChanges();
+            return (int) Result.Added;
+        }
     }
 }

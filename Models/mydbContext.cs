@@ -21,7 +21,7 @@ namespace SportStore.Models
         public virtual DbSet<Orderdetails> Orderdetails { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
-        public virtual DbSet<Productcategories> ProductCategories { get; set; }
+        public virtual DbSet<Productcategories> Productcategories { get; set; }
         public virtual DbSet<Productratings> Productratings { get; set; }
         public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Staff> Staff { get; set; }
@@ -32,7 +32,7 @@ namespace SportStore.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;port=3306;database=mydb;uid=root;pwd=Matkokat123!", x => x.ServerVersion("8.0.23-mysql"));
+                optionsBuilder.UseMySql("server=localhost;port=3306;database=mydb;uid=root;pwd=kokot123", x => x.ServerVersion("8.0.23-mysql"));
             }
         }
 
@@ -195,7 +195,6 @@ namespace SportStore.Models
                 entity.HasOne(d => d.Payment)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.PaymentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Orders_Payment1");
             });
 
@@ -214,11 +213,17 @@ namespace SportStore.Models
                     .HasColumnType("varchar(1000)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
+
+                entity.HasOne(d => d.Creditcart)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.CreditcartId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Payment_Credit_cart1");
             });
 
             modelBuilder.Entity<Productcategories>(entity =>
             {
-                entity.ToTable("product_categories");
+                entity.ToTable("productcategories");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("product_categories_id_UNIQUE")

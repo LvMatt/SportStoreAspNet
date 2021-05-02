@@ -5,6 +5,11 @@ namespace SportStore.Models
 {
     public partial class Creditcards
     {
+        public Creditcards()
+        {
+            Payments = new HashSet<Payments>();
+        }
+
         public int Id { get; set; }
         public string Validation { get; set; }
         public DateTime Expiration { get; set; }
@@ -12,5 +17,6 @@ namespace SportStore.Models
         public int CustomersId { get; set; }
 
         public virtual Customers Customers { get; set; }
+        public virtual ICollection<Payments> Payments { get; set; }
     }
 }
