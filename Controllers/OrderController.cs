@@ -47,7 +47,7 @@ namespace SportStore.Controllers
         }
 
         [HttpGet]
-        [Route("orderdetails")]
+        [Route("orderdetails/{id}")]
         public ActionResult<IEnumerable<Orderdetails>> GetOrderDetailsById(int id)
         {
             return Ok(_orderRepository.GetOrderDetails(id));
