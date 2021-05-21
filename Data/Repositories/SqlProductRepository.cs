@@ -10,9 +10,9 @@ namespace SportStore.Data
 {
     public class SqlProductRepository : IProductRepository
     {
-        private readonly SportStoreContext _context;
+        private readonly mydbContext _context;
 
-        public SqlProductRepository(SportStoreContext context)
+        public SqlProductRepository(mydbContext context)
         {
             _context = context;
         }

@@ -28,7 +28,8 @@ namespace SportStore.Controllers
 
         }
 
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         public ActionResult<IEnumerable<Products>> GetAllProducts()
         {
@@ -78,8 +79,8 @@ namespace SportStore.Controllers
             _productRepository.SaveChanges();
 
             var productReadDto = _mapper.Map<ProductsReadDto>(productModel);
-
-            return CreatedAtRoute(nameof(GetProductById), new { id = productReadDto.Id }, productReadDto);
+            //return Ok(productReadDto);
+             return CreatedAtRoute(nameof(GetProductById), new { id = productReadDto.Id }, productReadDto);
         }
 
         [HttpPost]

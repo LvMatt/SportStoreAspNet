@@ -10,9 +10,9 @@ namespace SportStore.Data.Repositories
 {
     public class SqlOrderRepository : IOrderRepository
     {
-        private readonly SportStoreContext _context;
+        private readonly mydbContext _context;
 
-        public SqlOrderRepository(SportStoreContext context)
+        public SqlOrderRepository(mydbContext context)
         {
             _context = context;
         }
@@ -86,6 +86,7 @@ namespace SportStore.Data.Repositories
 
         public int AddToOrder(Orderdetails orderdetails)
         {
+            _context.Set<SportStoreContext>().FromSqlRaw("cart_validation");
             var product = _context.Products.FirstOrDefault(x => x.Id == orderdetails.ProductsId);
             if (product == null) return (int)Result.InvalidProduct;
             _context.Orderdetails.Add(orderdetails);

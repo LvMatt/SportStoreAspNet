@@ -14,10 +14,14 @@ namespace SportStore.Data
 
         }
 
-        public SportStoreContext() : base()
-        {
 
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseMySql(
+        //        "Server=localhost;Port=3306;Database=mydb;Uid=root;Pwd=Matkokat123!",
+        //        new MySqlServerVersion(new Version(8, 0, 11))
+        //    );
+        //}
 
         public DbSet<Staff> Staff { get; set; }
         public DbSet<Customers> Customers { get; set; }

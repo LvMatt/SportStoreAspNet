@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MySql.Data.MySqlClient;
 using SportStore.Models;
 using SportStore.Options;
 using SportStore.ViewModels;
@@ -16,10 +16,10 @@ namespace SportStore.Data
 {
     public class SqlCustomersRepository : ICustomerRepository
     {
-        private readonly SportStoreContext _context;
+        private readonly mydbContext _context;
         private readonly JwtSettings _jwtSettings;
 
-        public SqlCustomersRepository(SportStoreContext context, JwtSettings jwtSettings)
+        public SqlCustomersRepository(mydbContext context, JwtSettings jwtSettings)
         {
             _context = context;
             _jwtSettings = jwtSettings;
@@ -27,6 +27,8 @@ namespace SportStore.Data
 
         public IEnumerable<Customers> GetAllCustomers()
         {
+            _context.Set<mydbContext>().FromSqlRaw("email_validation");
+
             return _context.Customers.ToList();
         }
 
@@ -73,6 +75,7 @@ namespace SportStore.Data
                 try
                 {
                     var existingUser = _context.Customers.SingleOrDefault(m => m.Email == customer.Email);
+
                     if (existingUser != null)
                     {
                         return new AuthenticationResult

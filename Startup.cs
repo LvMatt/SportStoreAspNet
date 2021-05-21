@@ -8,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SportStore.Data;
 using SportStore.Helpers;
+using SportStore.Models;
 using SportStore.Options;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,16 @@ namespace SportStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddMvc();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "My Awesome API",
+                    Version = "v1"
+                    });
+            });
 
             services.AddDistributedMemoryCache();
 
@@ -73,8 +85,10 @@ namespace SportStore
             );
 
 
-            services.AddDbContext<SportStoreContext>(opt => opt.UseMySql
-            (Configuration.GetConnectionString("SportShopConnect")));
+            string mySqlConnectionStr = Configuration.GetConnectionString("SportShopConnect");
+
+            services.AddDbContext<mydbContext>(options =>
+            options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -89,8 +103,13 @@ namespace SportStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
 
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Awesome API V1");
+                });
+            }
 
             app.UseRouting();
 
